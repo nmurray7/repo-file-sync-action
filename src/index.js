@@ -58,7 +58,7 @@ async function run() {
 			if(item.files[0].source === `.`){	
 				item.files = [];
 				fs.readdirSync(`.`).forEach(fileName => {
-					if(!fileName.startsWith('.git') && !fileName.localeCompare(`${ git.workingDir.split('\/')[0] }`)){
+					if(!fileName.startsWith('.git') && fileName.localeCompare(`${ git.workingDir.split('\/')[0] }`) != 0){
 						core.info(fileName);
 						item.files.push(
 							{ 
