@@ -77,7 +77,7 @@ async function run() {
 
 				if (isDirectory) core.info(`Source is directory`)
 
-				await copy(source, dest, isDirectory, file)
+				await copy(source, dest, isDirectory, file, `${git.workingDir}`)
 
 				await git.add(file.dest)
 

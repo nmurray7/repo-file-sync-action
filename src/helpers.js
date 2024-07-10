@@ -77,7 +77,7 @@ export async function write(src, dest, context) {
 	await fs.outputFile(dest, content)
 }
 
-export async function copy(src, dest, isDirectory, file) {
+export async function copy(src, dest, isDirectory, file, workingDir) {
 	src = `.`
 	core.info(`Enters copy`)
 	fs.readdirSync(`.`).forEach(n => {
@@ -87,7 +87,9 @@ export async function copy(src, dest, isDirectory, file) {
 	const exclude = file.exclude
 
 	const filterFunc = (file) => {
-
+		if(file.startsWith(workingDir)){
+			return false
+		}
 		if (exclude !== undefined) {
 
 			// Check if file-path is one of the present filepaths in the excluded paths
