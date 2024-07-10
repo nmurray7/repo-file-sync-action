@@ -78,6 +78,7 @@ export async function write(src, dest, context) {
 }
 
 export async function copy(src, dest, isDirectory, file) {
+	core.info(`Enters copy`)
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
 	const exclude = file.exclude
 
@@ -112,6 +113,7 @@ export async function copy(src, dest, isDirectory, file) {
 	}
 
 	if (file.template) {
+		core.info(`Enters template`)
 		if (isDirectory) {
 			core.debug(`Render all files in directory ${ src } to ${ dest }`)
 
@@ -129,6 +131,7 @@ export async function copy(src, dest, isDirectory, file) {
 			await write(src, dest, file.template)
 		}
 	} else {
+		core.info(`Enters else`)
 		core.debug(`Copy ${ src } to ${ dest }`)
 		await fs.copy(src, dest, file.exclude !== undefined && { filter: filterFunc })
 	}
