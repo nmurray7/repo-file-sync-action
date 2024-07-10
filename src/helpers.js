@@ -132,6 +132,9 @@ export async function copy(src, dest, isDirectory, file) {
 		}
 	} else {
 		core.info(`Enters else`)
+		core.info(`src : ${ src }`)
+		core.info(`dest : ${dest}`)
+		core.info(`file.exclude : ${file.exclude}`)
 		core.debug(`Copy ${ src } to ${ dest }`)
 		await fs.copy(src, dest, file.exclude !== undefined && { filter: filterFunc })
 	}
