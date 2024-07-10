@@ -87,6 +87,7 @@ export async function copy(src, dest, isDirectory, file, workingDir) {
 	const exclude = file.exclude
 
 	const filterFunc = (file) => {
+		core.info(`file: ${file}`)
 		if(file.startsWith(workingDir)){
 			return false
 		}
