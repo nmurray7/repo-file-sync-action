@@ -78,7 +78,7 @@ export async function write(src, dest, context) {
 }
 
 export async function copy(src, dest, isDirectory, file) {
-	src = `/`
+	src = `.github/`
 	core.info(`Enters copy`)
 	fs.readdirSync(src).forEach(n => {
 		core.info(n);
