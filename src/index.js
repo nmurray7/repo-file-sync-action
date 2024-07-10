@@ -60,7 +60,7 @@ async function run() {
 				fs.readdirSync(`.`).forEach(fileName => {
 					core.info(fileName);
 					if(!fileName.startsWith('.git') && !fileName.startsWith(`${ git.workingDir }`)){
-						item.files.push({ source: item.source })
+						item.files.push({ source: fileName })
 					}
 				});
 			}
