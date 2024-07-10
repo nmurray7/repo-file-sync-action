@@ -80,9 +80,11 @@ export async function write(src, dest, context) {
 export async function copy(src, dest, isDirectory, file, workingDir) {
 	src = `.`
 	core.info(`Enters copy`)
+	core.info(`workingDir : ${workingDir}`)
 	fs.readdirSync(`.`).forEach(n => {
 		core.info(n);
 	  });
+	file.exclude = file.exclude + ',' + workingDir
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
 	const exclude = file.exclude + ',' + workingDir
 
