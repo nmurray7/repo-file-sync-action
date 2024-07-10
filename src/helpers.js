@@ -84,9 +84,9 @@ export async function copy(src, dest, isDirectory, file, workingDir) {
 	fs.readdirSync(`.`).forEach(n => {
 		core.info(n);
 	  });
-	file.exclude = file.exclude + ',' + workingDir
+	file.exclude = file.exclude + ',' + workingDir.split('\/')[0]
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
-	const exclude = file.exclude + ',' + workingDir
+	const exclude = file.exclude
 
 	const filterFunc = (file) => {
 		if (exclude !== undefined) {
