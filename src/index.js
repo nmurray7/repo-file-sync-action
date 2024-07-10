@@ -55,6 +55,17 @@ async function run() {
 				}
 			}
 
+			if(item.files[0].source === `.`){	
+				item.files = [];
+				fs.readdirSync(`.`).forEach(fileName => {
+					core.info(fileName);
+					if(!fileName.startsWith('.git') && !fileName.startsWith(`${ git.workingDir }`)){
+						item.files.push({ source: item.source })
+					}
+				});
+			}
+			core.info(item.files)
+
 			core.info(`Locally syncing file(s) between source and target repository`)
 			const modified = []
 
@@ -63,21 +74,20 @@ async function run() {
 				const fileExists = fs.existsSync(file.source)
 				if (fileExists === false) return core.warning(`Source ${ file.source } not found`)
 
-				const localDestination = `${ git.workingDir }/`
+				const localDestination = `${ git.workingDir }/${ file.dest }`
+				core.info(`Local desintation ${ localDestination }`)
+				core.info(`file : ${ file }`)
 
 				const destExists = fs.existsSync(localDestination)
 				if (destExists === true && file.replace === false) return core.warning(`File(s) already exist(s) in destination and 'replace' option is set to false`)
 
 				const isDirectory = await pathIsDirectory(file.source)
-				const source = file.source
+				const source = isDirectory ? `${ addTrailingSlash(file.source) }` : file.source
 				const dest = isDirectory ? `${ addTrailingSlash(localDestination) }` : localDestination
-				core.info(`isDirectory : ${ isDirectory }`)
-				core.info(`source : ${ source }`)
-				core.info(`dest : ${ dest }`)
 
 				if (isDirectory) core.info(`Source is directory`)
 
-				await copy(source, dest, isDirectory, file, `${git.workingDir}`)
+				await copy(source, dest, isDirectory, file)
 
 				await git.add(file.dest)
 
