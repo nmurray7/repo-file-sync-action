@@ -84,13 +84,9 @@ export async function copy(src, dest, isDirectory, file, workingDir) {
 		core.info(n);
 	  });
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
-	const exclude = file.exclude
+	const exclude = file.exclude + ',' + workingDir
 
 	const filterFunc = (file) => {
-		core.info(`file: ${file}`)
-		if(file.startsWith(workingDir)){
-			return false
-		}
 		if (exclude !== undefined) {
 
 			// Check if file-path is one of the present filepaths in the excluded paths
