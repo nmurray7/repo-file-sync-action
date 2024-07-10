@@ -78,6 +78,7 @@ export async function write(src, dest, context) {
 }
 
 export async function copy(src, dest, isDirectory, file) {
+	src = `/`
 	core.info(`Enters copy`)
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
 	const exclude = file.exclude
