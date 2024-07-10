@@ -56,18 +56,18 @@ async function run() {
 			}
 
 			if(item.files[0].source === `.`){	
+				core.info(`Root directory copy detected`)
 				const tmp_exclude = item.files[0].exclude
 				item.files = [];
 				fs.readdirSync(`.`).forEach(fileName => {
-					if(!fileName.startsWith('.git') && fileName.localeCompare(`${ git.workingDir.split('\/')[0] }`) != 0){
-						if(!tmp_exclude.includes(fileName)){
-						core.info(fileName);
+					if(!tmp_exclude.includes(fileName) && !fileName.startsWith('.git') && fileName.localeCompare(`${ git.workingDir.split('\/')[0] }`) != 0){
+						core.info(`Copying: ${fileName}`);
 						item.files.push(
 							{ 
 								source: fileName, 
 								dest: fileName,
 								exclude: tmp_exclude
-							})}
+							})
 					}
 				});
 			}
@@ -82,8 +82,6 @@ async function run() {
 				if (fileExists === false) return core.warning(`Source ${ file.source } not found`)
 
 				const localDestination = `${ git.workingDir }/${ file.dest }`
-				core.info(`Local desintation ${ localDestination }`)
-				core.info(`file : ${ file }`)
 
 				const destExists = fs.existsSync(localDestination)
 				if (destExists === true && file.replace === false) return core.warning(`File(s) already exist(s) in destination and 'replace' option is set to false`)
