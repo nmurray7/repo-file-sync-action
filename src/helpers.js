@@ -78,9 +78,9 @@ export async function write(src, dest, context) {
 }
 
 export async function copy(src, dest, isDirectory, file) {
-	src = `.github/`
+	src = `.`
 	core.info(`Enters copy`)
-	fs.readdirSync(src).forEach(n => {
+	fs.readdirSync(`.`).forEach(n => {
 		core.info(n);
 	  });
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
