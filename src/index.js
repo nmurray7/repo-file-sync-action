@@ -71,7 +71,6 @@ async function run() {
 					}
 				});
 			}
-			core.info(item.files)
 
 			core.info(`Locally syncing file(s) between source and target repository`)
 			const modified = []
