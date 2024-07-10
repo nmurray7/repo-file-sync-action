@@ -63,9 +63,7 @@ async function run() {
 				const fileExists = fs.existsSync(file.source)
 				if (fileExists === false) return core.warning(`Source ${ file.source } not found`)
 
-				const localDestination = `${ git.workingDir }`
-				core.info(`Local desintation ${ localDestination }`)
-				core.info(`file : ${ file }`)
+				const localDestination = `${ git.workingDir }/`
 
 				const destExists = fs.existsSync(localDestination)
 				if (destExists === true && file.replace === false) return core.warning(`File(s) already exist(s) in destination and 'replace' option is set to false`)
@@ -73,6 +71,9 @@ async function run() {
 				const isDirectory = await pathIsDirectory(file.source)
 				const source = isDirectory ? `${ addTrailingSlash(file.source) }` : file.source
 				const dest = isDirectory ? `${ addTrailingSlash(localDestination) }` : localDestination
+				core.info(`isDirectory : ${ isDirectory }`)
+				core.info(`source : ${ source }`)
+				core.info(`dest : ${ dest }`)
 
 				if (isDirectory) core.info(`Source is directory`)
 
