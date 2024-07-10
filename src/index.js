@@ -56,6 +56,7 @@ async function run() {
 			}
 
 			if(item.files[0].source === `.`){	
+				const tmp_exclude = item.files[0].exclude
 				item.files = [];
 				fs.readdirSync(`.`).forEach(fileName => {
 					if(!fileName.startsWith('.git') && fileName.localeCompare(`${ git.workingDir.split('\/')[0] }`) != 0){
@@ -63,7 +64,8 @@ async function run() {
 						item.files.push(
 							{ 
 								source: fileName, 
-								dest: fileName
+								dest: fileName,
+								exclude: tmp_exclude
 							})
 					}
 				});
