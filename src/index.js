@@ -63,7 +63,7 @@ async function run() {
 				const fileExists = fs.existsSync(file.source)
 				if (fileExists === false) return core.warning(`Source ${ file.source } not found`)
 
-				const localDestination = `${ git.workingDir }/${ file.dest }`
+				const localDestination = `${ git.workingDir }`
 				core.info(`Local desintation ${ localDestination }`)
 				core.info(`file : ${ file }`)
 
