@@ -77,18 +77,12 @@ export async function write(src, dest, context) {
 	await fs.outputFile(dest, content)
 }
 
-export async function copy(src, dest, isDirectory, file, workingDir) {
-	src = `.`
-	core.info(`Enters copy`)
-	core.info(`workingDir : ${workingDir}`)
-	fs.readdirSync(`.`).forEach(n => {
-		core.info(n);
-	  });
-	file.exclude = file.exclude + ',' + workingDir.split('\/')[0] + '/'
+export async function copy(src, dest, isDirectory, file) {
 	const deleteOrphaned = isDirectory && file.deleteOrphaned
 	const exclude = file.exclude
 
 	const filterFunc = (file) => {
+
 		if (exclude !== undefined) {
 
 			// Check if file-path is one of the present filepaths in the excluded paths
@@ -118,7 +112,6 @@ export async function copy(src, dest, isDirectory, file, workingDir) {
 	}
 
 	if (file.template) {
-		core.info(`Enters template`)
 		if (isDirectory) {
 			core.debug(`Render all files in directory ${ src } to ${ dest }`)
 
@@ -136,10 +129,6 @@ export async function copy(src, dest, isDirectory, file, workingDir) {
 			await write(src, dest, file.template)
 		}
 	} else {
-		core.info(`Enters else`)
-		core.info(`src : ${ src }`)
-		core.info(`dest : ${dest}`)
-		core.info(`file.exclude : ${file.exclude}`)
 		core.debug(`Copy ${ src } to ${ dest }`)
 		await fs.copy(src, dest, file.exclude !== undefined && { filter: filterFunc })
 	}
