@@ -64,6 +64,8 @@ async function run() {
 				if (fileExists === false) return core.warning(`Source ${ file.source } not found`)
 
 				const localDestination = `${ git.workingDir }/${ file.dest }`
+				core.info(`Local desintation ${ localDestination }`)
+				core.info(`file : ${ file }`)
 
 				const destExists = fs.existsSync(localDestination)
 				if (destExists === true && file.replace === false) return core.warning(`File(s) already exist(s) in destination and 'replace' option is set to false`)
